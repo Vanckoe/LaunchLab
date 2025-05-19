@@ -92,7 +92,7 @@ const BuildOutputSettings: React.FC = () => {
           >
             <SettingRow
               label="Команда Build"
-              placeholder="`npm run build` or `next build`"
+              placeholder="`next build` default"
             />
             <SettingRow
               label="Output Directory"
@@ -100,7 +100,7 @@ const BuildOutputSettings: React.FC = () => {
             />
             <SettingRow
               label="Install Command"
-              placeholder="`yarn install`, `npm install`, or `bun install`"
+              placeholder="`yarn install`, `npm install`, или `bun install`"
             />
           </motion.div>
         )}
