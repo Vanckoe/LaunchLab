@@ -19,7 +19,7 @@ const Input = forwardRef<HTMLInputElement, Props>(
                 )}
                 <input
                     className={clsx(
-                        'w-full rounded-2xl py-3 border focus:outline-none',
+                        'w-full rounded-2xl py-4 shadow focus:outline-none',
                         { 'pl-[3.5rem]': iconLeft },
                         className,
                     )}
