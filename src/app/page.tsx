@@ -4,6 +4,7 @@ import Search from '@/assets/search';
 import Button from '@/components/ui/button';
 import CloudSearch from '@/assets/cloudSearch';
 import ProjectCard from '@/components/ui/projectCard';
+import Link from 'next/link';
 
 const projectsData = [
   {
@@ -34,9 +35,11 @@ export default function Home() {
     <div className="flex flex-col w-full mx-auto container mt-[4rem]">
       <div className="flex flex-row items-stretch gap-5">
         <Input className="bg-white" iconLeft={<CloudSearch width="2rem" height="2rem" />} />
-        <Button>Добавить сайт...</Button>
+        <Link href={'/newProject'}>
+          <Button>Добавить сайт...</Button>
+        </Link>
       </div>
-      <div className="grid grid-cols-3 gap-7 mt-10 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-7 mt-10 w-full">
         {projectsData.map((project, index) => (
           <ProjectCard
             key={index}
