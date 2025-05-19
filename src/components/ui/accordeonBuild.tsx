@@ -44,7 +44,7 @@ const SettingRow: React.FC<SettingRowProps> = ({ label, placeholder }) => {
           placeholder={placeholder}
           disabled={!enabled}
           className={cn(
-            'pr-14 pl-5 bg-white placeholder:text-black', // space for the switch
+            'pr-14 pl-5 bg-white placeholder:text-black border border-gray-100  placeholder:opacity-50 ', // space for the switch
             !enabled && 'opacity-50 cursor-not-allowed'
           )}
         />
@@ -68,7 +68,7 @@ const BuildOutputSettings: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <section className="rounded-lg bg-[#f3f4f680] md:w-[30rem] p-6 w-full mx-auto">
+    <section className="rounded-lg bg-[#f3f4f680] p-6 w-full">
       {/* header */}
       <button
         type="button"
@@ -88,7 +88,7 @@ const BuildOutputSettings: React.FC = () => {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="overflow-hidden mt-6 flex flex-col gap-5"
+            className="overflow-hidden mt-6 flex flex-col gap-4"
           >
             <SettingRow
               label="Команда Build"
