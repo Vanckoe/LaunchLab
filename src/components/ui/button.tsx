@@ -8,8 +8,8 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          'w-full md:w-fit md:px-10 bg-white text-[#004FFF] shadow hover:bg-[#4981FF] hover:text-white active:bg-[#B1C9FF] active:text-white cursor-pointer',
-        primaryFull: 'w-full bg-[#004FFF] text-[#FFFFFF] hover:bg-[#4981FF] active:bg-[#B1C9FF]',
+          'w-full md:w-fit md:px-10 bg-white text-[#0D87EF] shadow hover:bg-[#4981FF] hover:text-white active:bg-[#B1C9FF] active:text-white cursor-pointer',
+        primaryFull: 'w-full bg-[#0D87EF] text-[#FFFFFF] hover:bg-[#4981FF] active:bg-[#B1C9FF]',
         secondary:
           'max-h-[72px] w-full rounded-[10px] border border-[#848484] bg-white text-[#848484] font-semibold hover:border-[#4981FF] hover:bg-[#4981FF] hover:text-white active:bg-[#004FFF] active:text-white',
       },

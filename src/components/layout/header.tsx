@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import User from '@/assets/User';
+import Link from 'next/link';
 
 const Header = () => {
   return (
@@ -31,6 +32,13 @@ const Header = () => {
           >
             Docs
           </button>
+          <Link 
+            href={'https://www.ismet.kz/ru/it-resheniya/kontakty'}
+            //   onClick={() => scrollToSection('id4')}
+            className="text-[#A8A8A8] font-light hover:text-[#000000]"
+          >
+            Контакты
+          </Link>
         </nav>
         <div className="size-[3rem] flex items-center cursor-progress justify-center bg-blue-500 rounded-full">
             <User color='white' width='1.5rem' height='1.5rem'/>
