@@ -9,7 +9,7 @@ const projectsData = [
   {
     github: 'https://github.com/Vanckoe/LaunchLab',
     domainName: 'Launch Lab',
-    link: 'https://github.com/Vanckoe/LaunchLab',
+    link: 'launch-lab-nine.vercel.app',
     lastUpdated: '2024-01-15 15:00',
     favicon: '/file.svg',
   },
