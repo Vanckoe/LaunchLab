@@ -13,14 +13,14 @@ const Input = forwardRef<HTMLInputElement, Props>(
         return (
             <div className={clsx('relative w-full', containerClassName)}>
                 {iconLeft && (
-                    <div className="absolute left-4 top-1/2 -translate-y-1/2 transform">
+                    <div className="absolute left-5 top-1/2 -translate-y-1/2 transform">
                         {iconLeft}
                     </div>
                 )}
                 <input
                     className={clsx(
-                        'w-full rounded-2xl py-4 shadow focus:outline-none',
-                        { 'pl-[3.5rem]': iconLeft },
+                        'w-full rounded-2xl py-5 shadow focus:outline-none',
+                        { 'pl-[4rem]': iconLeft },
                         className,
                     )}
                     placeholder={label || 'Введите значение'}
