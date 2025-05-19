@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Github from '@/assets/github';
 import CloudPaper from '@/assets/cloud-paper';
+import Left from '@/assets/Left';
 
 interface ProjectCardProps {
   github: string;
@@ -31,10 +32,14 @@ const ProjectCard = ({ domainName, link, github, lastUpdated, favicon }: Project
         <Github color="#0D87EF" width="1.3rem" height="1.3rem" />
         {github}
       </Link>
-      <div className="flex flex-row items-center gap-2">
-        <CloudPaper width="1.5rem" height="1.5rem" />
-        <p className="">Last modified: {lastUpdated}</p>
-      </div>
+
+      <Link href={'#!'} className="flex flex-row items-end justify-between">
+        <div className="flex flex-row items-center gap-2">
+          <CloudPaper width="1.5rem" height="1.5rem" />
+          <p className="">Last modified: {lastUpdated}</p>
+        </div>
+        <Left color='black'/>
+      </Link>
     </div>
   );
 };

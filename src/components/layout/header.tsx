@@ -1,6 +1,6 @@
 import React from 'react';
-import Logo from '@/assets/logo';
 import Image from 'next/image';
+import User from '@/assets/User';
 
 const Header = () => {
   return (
@@ -32,7 +32,9 @@ const Header = () => {
             Docs
           </button>
         </nav>
-        <div className=""></div>
+        <div className="size-[3rem] flex items-center cursor-progress justify-center bg-blue-500 rounded-full">
+            <User color='white' width='1.5rem' height='1.5rem'/>
+        </div>
       </div>
     </div>
   );
