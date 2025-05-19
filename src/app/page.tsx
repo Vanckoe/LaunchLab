@@ -32,7 +32,7 @@ const projectsData = [
 export default function Home() {
   return (
     <div className="flex flex-col w-full mx-auto container mt-[4rem]">
-      <div className="flex flex-row items-center  gap-5">
+      <div className="flex flex-row items-stretch gap-5">
         <Input className="bg-white" iconLeft={<CloudSearch width="2rem" height="2rem" />} />
         <Button>Добавить сайт...</Button>
       </div>
