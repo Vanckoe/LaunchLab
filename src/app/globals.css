@@ -4,7 +4,7 @@ html {
   font-size: 3.333vw !important;
 }
 :root {
-  --background: #171717;
+  --background: #4A4A4A;
   --foreground: #f5f7f9;
 }
 :root {
@@ -17,7 +17,7 @@ html {
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #f5f7f9;
-    --foreground: #171717;
+    --foreground: #4A4A4A;
   }
 }
 

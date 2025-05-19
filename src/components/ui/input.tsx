@@ -6,6 +6,7 @@ type Props = React.HTMLProps<HTMLInputElement> & {
     iconLeft?: React.ReactNode;
     containerClassName?: string;
     error?: string;
+    className?: string;
 };
 
 const Input = forwardRef<HTMLInputElement, Props>(
