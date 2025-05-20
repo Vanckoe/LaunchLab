@@ -33,7 +33,7 @@ const ProjectCard = ({ domainName, link, github, lastUpdated, favicon }: Project
         {github}
       </Link>
 
-      <Link href={'#!'} className="flex -mt-3 flex-row items-end justify-between">
+      <Link href={'/dashboard'} className="flex -mt-3 flex-row items-end justify-between">
         <div className="flex flex-row items-center gap-2">
           <CloudPaper width="1.5rem" height="1.5rem" />
           <p className="">Last modified: {lastUpdated}</p>
