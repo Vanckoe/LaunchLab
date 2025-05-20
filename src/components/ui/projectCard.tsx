@@ -27,7 +27,7 @@ const ProjectCard = ({ domainName, link, github, lastUpdated, favicon }: Project
       </div>
       <Link
         href={github}
-        className="py-1 px-5 w-fit text-sm text-[#0D87EF] font-semibold flex flex-row items-center gap-3 rounded-4xl bg-gray-200"
+        className="py-2 px-5 w-fit text-sm text-[#0D87EF] font-semibold flex flex-row items-center gap-3 rounded-4xl bg-gray-100"
       >
         <Github color="#0D87EF" width="1.3rem" height="1.3rem" />
         {github}
