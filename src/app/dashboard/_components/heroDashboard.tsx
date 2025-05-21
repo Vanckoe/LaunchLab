@@ -30,7 +30,7 @@ const HeroDashboard: React.FC<HeroDashboardProps> = ({
       <div className="flex flex-col text-lg md:flex-row items-start gap-10">
         <CanvasPreview url={link} />
         <div className="flex flex-col md:flex-row w-full md:justify-between">
-          <div className="flex flex-col gap-6 w-full">
+          <div className="flex flex-col gap-7 w-full">
             <div className="flex flex-col">
               <p className="text-lg font-semibold">Развертывание: </p>
               <Link href={link} className="text-[#0D87EF] text-base font-medium opacity-80">
@@ -45,7 +45,7 @@ const HeroDashboard: React.FC<HeroDashboardProps> = ({
             </div>
             <div className="flex flex-row gap-10">
               <div className="flex flex-col">
-                <p className="text-lg font-semibold">Build Status:</p>{' '}
+                <p className="text-lg font-semibold">Статус билда:</p>{' '}
                 <p className="">{buildStatus.state}</p>
                 {buildStatus.errors.length > 0 && (
                   <ul className="text-red-500">
@@ -70,7 +70,7 @@ const HeroDashboard: React.FC<HeroDashboardProps> = ({
           </div>
           <div className="flex text-end flex-col">
             {frameworkPreset}
-            <p className="text-nowrap">Айди проекта: {projectId}</p>
+            <p className="text-nowrap">id проекта: {projectId}</p>
           </div>
         </div>
       </div>

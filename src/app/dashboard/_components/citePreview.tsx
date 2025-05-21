@@ -50,7 +50,12 @@ export default function CanvasPreview({ url }: CanvasPreviewProps) {
   };
 
   return (
-    <Link href={url} className="relative inline-block w-full md:w-2/3 h-fit">
+    <Link
+      href={url}
+      className="relative inline-block w-full md:w-2/3 h-fit"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
       {loading && (
         <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/60 backdrop-blur-sm">
           <div className="size-[3rem] border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
