@@ -196,12 +196,16 @@ function HeavyResources({ resources }: { resources: PageSpeedApiResponse['networ
 }
 function Skeleton() {
   return (
-    <div className="bg-white dark:bg-neutral-900 rounded-lg p-6 shadow-md w-full animate-pulse">
-      <div className="h-4 bg-gray-300 dark:bg-neutral-700 rounded w-2/3 mb-6" />
-      <div className="h-8 bg-gray-300 dark:bg-neutral-700 rounded w-1/3 mb-4" />
+    <div className="bg-white border border-gray-100 rounded-lg p-6 shadow-md w-full animate-pulse">
+      <p className="mb-4">Загрузка анализа от Pagespeed...</p>
+      <div className="flex flex-row gap-4">
+        <div className="h-5 bg-gray-300  rounded w-1/6 mb-6" />
+        <div className="h-5 bg-gray-300  rounded w-1/4 mb-6" />
+      </div>
+      <div className="h-8 bg-gray-300  rounded w-1/3 mb-4" />
       <div className="space-y-2">
         {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="h-3 bg-gray-300 dark:bg-neutral-700 rounded" />
+          <div key={i} className="h-3 bg-gray-300  rounded" />
         ))}
       </div>
     </div>
