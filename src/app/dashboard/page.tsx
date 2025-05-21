@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Button from '@/components/ui/button';
 import HeroDashboard from './_components/heroDashboard';
 import { GetProjectId } from '@/lib/utils/types';
-import CanvasPreview from './_components/citePreview';
+import PageSpeedCard from '@/app/dashboard/_components/pageSpeedCard';
 
 const jsonData: GetProjectId = {
   projectId: '1',
@@ -51,6 +51,8 @@ const Dashboard = () => {
             <Button className="py-4">Пересобрать проект</Button>
           </Link>
         </div>
+        <PageSpeedCard url={jsonData.link} />
+
       </div>
     </div>
   );
