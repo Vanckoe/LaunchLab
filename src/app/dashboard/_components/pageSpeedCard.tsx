@@ -48,7 +48,7 @@ export default function PageSpeedCard({ url, strategy = 'mobile' }: PageSpeedCar
 
       {/* Categories */}
       {/* <CategoryScores {...data.scores} /> */}
-      <div className="flex flex-col md:flex-row w-full gap-20">
+      <div className="flex flex-col md:flex-row w-full gap-10 md:gap-20">
         {/* Performance + Web Vitals */}
         <PerfBlock perf={data.scores.performance} metrics={data.metrics} />
 
@@ -103,7 +103,7 @@ function Header({ url, strategy }: { url: string; strategy: string }) {
 function PerfBlock({ perf, metrics }: { perf: number; metrics: PageSpeedApiResponse['metrics'] }) {
   const vitalsOrder: (keyof typeof metrics)[] = ['fcp', 'lcp', 'cls', 'tbt', 'tti', 'si'];
   return (
-    <div className="flex flex-col md:flex-row items-center gap-6">
+    <div className="flex flex-col md:flex-row items-center gap-6 border-b md:border-none border-gray-200 pb-10 md:gap-10">
       <div className={`text-8xl font-extrabold ${color(perf)}`}>
         {perf}
         <span className="text-7xl">/100</span>
@@ -123,7 +123,7 @@ function PerfBlock({ perf, metrics }: { perf: number; metrics: PageSpeedApiRespo
 function OpportunitiesList({ list }: { list: PageSpeedApiResponse['opportunities'] }) {
   if (!list.length) return null;
   return (
-    <div>
+    <div className='border-b md:border-none border-gray-200 pb-10 '>
       <h3 className="font-semibold mb-2">Рекомендации по оптимизации</h3>
       <ul className="space-y-1 text-sm">
         {list.map(o => (
@@ -140,7 +140,7 @@ function OpportunitiesList({ list }: { list: PageSpeedApiResponse['opportunities
 function Diagnostics({ diag }: { diag: PageSpeedApiResponse['diagnostics'] }) {
   if (!Object.keys(diag).length) return null;
   return (
-    <div>
+    <div className='border-b md:border-none border-gray-200 pb-10 '>
       <h3 className="font-semibold mb-2">Диагностика</h3>
       <ul className="text-sm space-y-1">
         {'numRequests' in diag && (
