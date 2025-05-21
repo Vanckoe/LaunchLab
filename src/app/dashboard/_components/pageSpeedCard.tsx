@@ -103,15 +103,16 @@ function Header({ url, strategy }: { url: string; strategy: string }) {
 function PerfBlock({ perf, metrics }: { perf: number; metrics: PageSpeedApiResponse['metrics'] }) {
   const vitalsOrder: (keyof typeof metrics)[] = ['fcp', 'lcp', 'cls', 'tbt', 'tti', 'si'];
   return (
-    <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-      <div className={`text-6xl font-extrabold ${color(perf)}`}>
+    <div className="flex flex-col md:flex-row items-center gap-6">
+      <div className={`text-8xl font-extrabold ${color(perf)}`}>
         {perf}
-        <span className="text-3xl">/100</span>
+        <span className="text-7xl">/100</span>
       </div>
-      <ul className="text-sm space-y-1">
+      <ul className="text-xl space-y-1 w-full md:w-fit">
         {vitalsOrder.map(k => (
-          <li key={k}>
-            <strong className="uppercase">{k}</strong>: {metrics[k].displayValue}
+          <li key={k} className='flex flex-row w-full md:w-fit justify-between md:justify-items-start gap-1'>
+            <p className=""><strong className="uppercase">{k}</strong>:</p>
+            <p className=""> {metrics[k].displayValue}</p>
           </li>
         ))}
       </ul>

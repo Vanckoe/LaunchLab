@@ -30,7 +30,7 @@ const HeroDashboard: React.FC<HeroDashboardProps> = ({
       <div className="flex flex-col text-lg md:flex-row items-start gap-10">
         <CanvasPreview url={link} />
         <div className="flex flex-col md:flex-row w-full md:justify-between">
-          <div className="flex flex-col gap-7 w-full">
+          <div className="flex flex-col gap-4 md:gap-7 w-full">
             <div className="flex flex-col">
               <p className="text-lg font-semibold">Развертывание: </p>
               <Link href={link} className="text-[#0D87EF] text-base font-medium opacity-80">
@@ -68,7 +68,7 @@ const HeroDashboard: React.FC<HeroDashboardProps> = ({
               {functionCPU.memory}
             </p>
           </div>
-          <div className="flex text-end flex-col">
+          <div className="flex mt-10 md:mt-0 md:text-end flex-col">
             {frameworkPreset}
             <p className="text-nowrap">id проекта: {projectId}</p>
           </div>
