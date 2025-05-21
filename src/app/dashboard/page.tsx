@@ -9,10 +9,10 @@ import CanvasPreview from './_components/citePreview';
 
 const jsonData: GetProjectId = {
   projectId: '1',
-  github: 'https://github.com/user/repo1',
-  domainName: 'launch-lab-nine.vercel.app',
+  github: 'https://github.com/Vanckoe/LaunchLab',
+  domainName: 'outube-academy.vercel.app',
   frameworkPreset: 'Next.js',
-  link: 'https://launch-lab-nine.vercel.app/',
+  link: 'https://youtube-academy.vercel.app',
   lastUpdated: '2025-05-19T14:00:00Z',
   securityLevel: 'Standart',
   functionCPU: {
@@ -32,8 +32,8 @@ const Dashboard = () => {
         <p className="text-3xl font-medium">{jsonData.domainName}</p>
         <div className="flex flex-row items-center gap-2">
           <Button className="py-4">Домен</Button>
-          <Link href={jsonData.link}>
-            <Button className="py-4">{jsonData.link}</Button>
+          <Link href={jsonData.github}>
+            <Button className="py-4">Настройки проекта</Button>
           </Link>
         </div>
       </div>
