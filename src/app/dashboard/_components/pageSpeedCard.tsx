@@ -1,85 +1,222 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { PageSpeedApiResponse } from '@/lib/utils/types';
 
 interface PageSpeedCardProps {
   url: string;
+  strategy?: 'mobile' | 'desktop';
 }
 
-export default function PageSpeedCard({ url }: PageSpeedCardProps) {
+export default function PageSpeedCard({ url, strategy = 'mobile' }: PageSpeedCardProps) {
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<{
-    score: number;
-    fcp: string;
-    lcp: string;
-    cls: string;
-    tti: string;
-  } | null>(null);
-
+  const [data, setData] = useState<PageSpeedApiResponse | null>(null);
   const [error, setError] = useState('');
 
+  /* ───────────────────────────── fetch ───────────────────────────── */
   useEffect(() => {
     if (!url) return;
-
-    const fetchData = async () => {
+    (async () => {
       setLoading(true);
       setError('');
-
       try {
-        const res = await fetch(`/api/pagespeed?url=${encodeURIComponent(url)}`);
+        const res = await fetch(
+          `/api/pagespeed?url=${encodeURIComponent(url)}&strategy=${strategy}`
+        );
         const json = await res.json();
-
-        if (res.ok) {
-          setData(json);
-        } else {
-          setError(json.error || 'Ошибка при загрузке данных');
-        }
-      } catch (e) {
-        setError('Ошибка подключения к API');
+        res.ok ? setData(json) : setError(json.error || 'Ошибка API');
+      } catch {
+        setError('Нет соединения с API');
       }
-
       setLoading(false);
-    };
+    })();
+  }, [url, strategy]);
 
-    fetchData();
-  }, [url]);
+  /* ───────────────────────── helpers ─────────────────────────────── */
+  const color = (v: number) =>
+    v >= 90 ? 'text-green-500' : v >= 50 ? 'text-yellow-500' : 'text-red-500';
 
-  const getColor = (score: number) => {
-    if (score >= 90) return 'text-green-500';
-    if (score >= 50) return 'text-yellow-500';
-    return 'text-red-500';
-  };
+  if (loading) return <Skeleton />;
+  if (error) return <ErrorBox msg={error} />;
 
+  if (!data) return null;
+
+  /* ───────────────────────── UI ──────────────────────────────────── */
   return (
-    <div className="bg-white dark:bg-[#1e1e1e] rounded-lg p-6 shadow-md w-full max-w-md">
-      <h2 className="text-lg font-semibold mb-4">
-        Google PageSpeed для: <span className="underline">{url}</span>
-      </h2>
+    <div className=" rounded-lg p-6 shadow-md w-full space-y-6">
+      <Header url={url} strategy={strategy} />
 
-      {loading && <p className="text-gray-500">Загрузка...</p>}
-      {error && <p className="text-red-500">{error}</p>}
+      {/* Categories */}
+      {/* <CategoryScores {...data.scores} /> */}
+      <div className="flex flex-col md:flex-row w-full gap-20">
+        {/* Performance + Web Vitals */}
+        <PerfBlock perf={data.scores.performance} metrics={data.metrics} />
 
-      {data && (
-        <div className="space-y-3">
-          <div className={`text-4xl font-bold ${getColor(data.score)}`}>{data.score}/100</div>
-          <div className="text-sm text-gray-500">Performance Score</div>
+        {/* Opportunities */}
+        <OpportunitiesList list={data.opportunities} />
 
-          <ul className="text-sm mt-4 space-y-1">
-            <li>
-              <strong>FCP:</strong> {data.fcp}
-            </li>
-            <li>
-              <strong>LCP:</strong> {data.lcp}
-            </li>
-            <li>
-              <strong>CLS:</strong> {data.cls}
-            </li>
-            <li>
-              <strong>TTI:</strong> {data.tti}
-            </li>
-          </ul>
-        </div>
-      )}
+        {/* Diagnostics */}
+        <Diagnostics diag={data.diagnostics} />
+      </div>
+      {/* Heavy Resources */}
+      <HeavyResources resources={data.network} />
+
+      {/* Final Screenshot */}
+      {/* {data.screenshots.final && <FinalScreenshot img={data.screenshots.final} />} */}
     </div>
   );
+}
+
+/* ───────────────────────── sub-components ────────────────────────── */
+
+function Header({ url, strategy }: { url: string; strategy: string }) {
+  return (
+    <h2 className="text-xl font-semibold">
+      PageSpeed ({strategy}) →{' '}
+      <a
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="underline text-blue-600 break-all"
+      >
+        {url}
+      </a>
+    </h2>
+  );
+}
+
+// function CategoryScores(scores: PageSpeedApiResponse['scores']) {
+//   return (
+//     <div className="flex flex-wrap gap-4">
+//       {Object.entries(scores).map(
+//         ([k, v]) =>
+//           v !== null && (
+//             <span key={k} className={`px-2 py-1 rounded text-sm font-medium ${color(v)}`}>
+//               {k}: {v}
+//             </span>
+//           )
+//       )}
+//     </div>
+//   );
+// }
+
+function PerfBlock({ perf, metrics }: { perf: number; metrics: PageSpeedApiResponse['metrics'] }) {
+  const vitalsOrder: (keyof typeof metrics)[] = ['fcp', 'lcp', 'cls', 'tbt', 'tti', 'si'];
+  return (
+    <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+      <div className={`text-6xl font-extrabold ${color(perf)}`}>
+        {perf}
+        <span className="text-3xl">/100</span>
+      </div>
+      <ul className="text-sm space-y-1">
+        {vitalsOrder.map(k => (
+          <li key={k}>
+            <strong className="uppercase">{k}</strong>: {metrics[k].displayValue}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function OpportunitiesList({ list }: { list: PageSpeedApiResponse['opportunities'] }) {
+  if (!list.length) return null;
+  return (
+    <div>
+      <h3 className="font-semibold mb-2">Рекомендации по оптимизации</h3>
+      <ul className="space-y-1 text-sm">
+        {list.map(o => (
+          <li key={o.id} className="flex justify-between gap-2">
+            <span>{o.title}</span>
+            <span className="text-gray-500">−{o.savingsMs} ms</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function Diagnostics({ diag }: { diag: PageSpeedApiResponse['diagnostics'] }) {
+  if (!Object.keys(diag).length) return null;
+  return (
+    <div>
+      <h3 className="font-semibold mb-2">Диагностика</h3>
+      <ul className="text-sm space-y-1">
+        {'numRequests' in diag && (
+          <li>
+            <strong>Запросов:</strong> {diag.numRequests}
+          </li>
+        )}
+        {'totalByteWeight' in diag && (
+          <li>
+            <strong>Вес страницы:</strong> {(diag.totalByteWeight / 1024).toFixed(1)} KB
+          </li>
+        )}
+        {'domSize' in diag && (
+          <li>
+            <strong>DOM-элементов:</strong> {diag.domSize}
+          </li>
+        )}
+      </ul>
+    </div>
+  );
+}
+
+function HeavyResources({ resources }: { resources: PageSpeedApiResponse['network'] }) {
+  if (!resources.length) return null;
+  return (
+    <div>
+      <h3 className="font-semibold mb-2">Тяжёлые ресурсы (Top 10)</h3>
+      <div className="overflow-x-auto">
+        <table className="min-w-full text-sm">
+          <thead>
+            <tr className="border-b dark:border-neutral-700">
+              <th className="text-left py-1 pr-4">URL</th>
+              <th className="text-left py-1 pr-2">Тип</th>
+              <th className="text-right py-1">KB</th>
+            </tr>
+          </thead>
+          <tbody>
+            {resources.map(r => (
+              <tr key={r.url} className="border-b last:border-none dark:border-neutral-700">
+                <td className="pr-4 py-1 whitespace-nowrap max-w-[240px] truncate">
+                  <a href={r.url} target="_blank" rel="noopener noreferrer" className="underline">
+                    {r.url}
+                  </a>
+                </td>
+                <td className="pr-2 py-1">{r.type}</td>
+                <td className="py-1 text-right">{r.sizeKb}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+function Skeleton() {
+  return (
+    <div className="bg-white dark:bg-neutral-900 rounded-lg p-6 shadow-md w-full animate-pulse">
+      <div className="h-4 bg-gray-300 dark:bg-neutral-700 rounded w-2/3 mb-6" />
+      <div className="h-8 bg-gray-300 dark:bg-neutral-700 rounded w-1/3 mb-4" />
+      <div className="space-y-2">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div key={i} className="h-3 bg-gray-300 dark:bg-neutral-700 rounded" />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ErrorBox({ msg }: { msg: string }) {
+  return (
+    <div className="bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-700 text-red-800 dark:text-red-200 rounded p-4">
+      {msg}
+    </div>
+  );
+}
+
+/* ───────────────────────── util ─────────────────────────────────── */
+function color(v: number) {
+  return v >= 90 ? 'text-green-500' : v >= 50 ? 'text-yellow-500' : 'text-red-500';
 }
