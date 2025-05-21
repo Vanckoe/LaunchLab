@@ -5,15 +5,18 @@ import { PageSpeedApiResponse } from '@/lib/utils/types';
 
 interface PageSpeedCardProps {
   url: string;
-  strategy?: 'mobile' | 'desktop';
+  /** Исходная стратегия, если нужна (по умолчанию mobile) */
+  initialStrategy?: 'mobile' | 'desktop';
 }
 
-export default function PageSpeedCard({ url, strategy = 'mobile' }: PageSpeedCardProps) {
+export default function PageSpeedCard({ url, initialStrategy = 'mobile' }: PageSpeedCardProps) {
+  /* ─────────── state ─────────── */
+  const [strategy, setStrategy] = useState<'mobile' | 'desktop'>(initialStrategy);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<PageSpeedApiResponse | null>(null);
   const [error, setError] = useState('');
 
-  /* ───────────────────────────── fetch ───────────────────────────── */
+  /* ───────── fetch on change ───────── */
   useEffect(() => {
     if (!url) return;
     (async () => {
@@ -32,37 +35,47 @@ export default function PageSpeedCard({ url, strategy = 'mobile' }: PageSpeedCar
     })();
   }, [url, strategy]);
 
-  /* ───────────────────────── helpers ─────────────────────────────── */
+  /* ───────── helpers ───────── */
   const color = (v: number) =>
     v >= 90 ? 'text-green-500' : v >= 50 ? 'text-yellow-500' : 'text-red-500';
 
+  /* ───────── UI ───────── */
   if (loading) return <Skeleton />;
   if (error) return <ErrorBox msg={error} />;
-
   if (!data) return null;
 
-  /* ───────────────────────── UI ──────────────────────────────────── */
   return (
-    <div className=" rounded-lg p-6 shadow-md w-full space-y-6">
-      <Header url={url} strategy={strategy} />
+    <div className="rounded-lg p-6 shadow-md w-full space-y-6">
+      {/* ───── Переключатель стратегии ───── */}
+      <div className="flex flex-col gap-5 md:flex-row md:items-start md:justify-between mb-4">
+        <Header url={url} strategy={strategy} />
 
-      {/* Categories */}
-      {/* <CategoryScores {...data.scores} /> */}
+        <div className="inline-flexrounded ">
+          {(['mobile', 'desktop'] as const).map(opt => (
+            <button
+              key={opt}
+              onClick={() => setStrategy(opt)}
+              className={`px-3 py-2 text-sm  border border-gray-200 font-mediumm ${
+                strategy === opt ? 'bg-[#0D87EF] text-white' : 'bg-white text-gray-700 '
+              } first:rounded-l last:rounded-r `}
+            >
+              {opt === 'mobile' ? '📱 Моб.' : '🖥 ПК'}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Performance + Web Vitals */}
+      <PerfBlock scores={data.scores} metrics={data.metrics} />
+
+      {/* Opportunities • Diagnostics */}
       <div className="flex flex-col md:flex-row w-full gap-10 md:gap-20">
-        {/* Performance + Web Vitals */}
-        <PerfBlock perf={data.scores.performance} metrics={data.metrics} />
-
-        {/* Opportunities */}
         <OpportunitiesList list={data.opportunities} />
-
-        {/* Diagnostics */}
         <Diagnostics diag={data.diagnostics} />
       </div>
-      {/* Heavy Resources */}
-      <HeavyResources resources={data.network} />
 
-      {/* Final Screenshot */}
-      {/* {data.screenshots.final && <FinalScreenshot img={data.screenshots.final} />} */}
+      {/* Heavy resources */}
+      <HeavyResources resources={data.network} />
     </div>
   );
 }
@@ -100,19 +113,30 @@ function Header({ url, strategy }: { url: string; strategy: string }) {
 //   );
 // }
 
-function PerfBlock({ perf, metrics }: { perf: number; metrics: PageSpeedApiResponse['metrics'] }) {
+function PerfBlock({
+  scores, // ← вместо perf передаём сразу все баллы
+  metrics,
+}: {
+  scores: PageSpeedApiResponse['scores'];
+  metrics: PageSpeedApiResponse['metrics'];
+}) {
+  const perf = scores.performance; // тот же общий балл
   const vitalsOrder: (keyof typeof metrics)[] = ['fcp', 'lcp', 'cls', 'tbt', 'tti', 'si'];
+
   return (
-    <div className="flex flex-col md:flex-row items-center gap-6 border-b md:border-none border-gray-200 pb-10 md:gap-10">
-      <div className={`text-8xl font-extrabold ${color(perf)}`}>
-        {perf}
-        <span className="text-7xl">/100</span>
+    <div className="flex flex-col gap-8 md:flex-row md:items-center border-b md:border-none border-gray-200 pb-10 md:gap-14">
+      {/* ——— общий балл ——— */}
+      <div className="flex flex-col items-center">
+        {/* мини-круги категорий */}
+        <CategoryGauges scores={scores} />
       </div>
+
+      {/* ——— Core Web Vitals ——— */}
       <ul className="text-xl space-y-1 w-full md:w-fit">
         {vitalsOrder.map(k => (
-          <li key={k} className='flex flex-row w-full md:w-fit justify-between md:justify-items-start gap-1'>
-            <p className=""><strong className="uppercase">{k}</strong>:</p>
-            <p className=""> {metrics[k].displayValue}</p>
+          <li key={k} className="flex flex-row w-full md:w-fit justify-between gap-1">
+            <span className="uppercase font-semibold">{k}</span>
+            <span>{metrics[k].displayValue}</span>
           </li>
         ))}
       </ul>
@@ -123,7 +147,7 @@ function PerfBlock({ perf, metrics }: { perf: number; metrics: PageSpeedApiRespo
 function OpportunitiesList({ list }: { list: PageSpeedApiResponse['opportunities'] }) {
   if (!list.length) return null;
   return (
-    <div className='border-b md:border-none border-gray-200 pb-10 '>
+    <div className="border-b md:border-none border-gray-200 pb-10 ">
       <h3 className="font-semibold mb-2">Рекомендации по оптимизации</h3>
       <ul className="space-y-1 text-sm">
         {list.map(o => (
@@ -140,7 +164,7 @@ function OpportunitiesList({ list }: { list: PageSpeedApiResponse['opportunities
 function Diagnostics({ diag }: { diag: PageSpeedApiResponse['diagnostics'] }) {
   if (!Object.keys(diag).length) return null;
   return (
-    <div className='border-b md:border-none border-gray-200 pb-10 '>
+    <div className="border-b md:border-none border-gray-200 pb-10 ">
       <h3 className="font-semibold mb-2">Диагностика</h3>
       <ul className="text-sm space-y-1">
         {'numRequests' in diag && (
@@ -215,7 +239,7 @@ function Skeleton() {
 
 function ErrorBox({ msg }: { msg: string }) {
   return (
-    <div className="bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-700 text-red-800 dark:text-red-200 rounded p-4">
+    <div className="bg-red-50 dark:bg-red-900/20 border border-red-300 dark:border-red-700 rounded p-4">
       {msg}
     </div>
   );
@@ -224,4 +248,66 @@ function ErrorBox({ msg }: { msg: string }) {
 /* ───────────────────────── util ─────────────────────────────────── */
 function color(v: number) {
   return v >= 90 ? 'text-green-500' : v >= 50 ? 'text-yellow-500' : 'text-red-500';
+}
+
+/* CategoryGauges.tsx */
+
+type Scores = PageSpeedApiResponse['scores'];
+
+function CategoryGauges({ scores }: { scores: Scores }) {
+  const entries = Object.entries(scores).filter(([, v]) => v !== null) as [keyof Scores, number][];
+
+  // Цвет по рейтингу
+  const ringColor = (v: number) => (v >= 90 ? '#22c55e' : v >= 50 ? '#facc15' : '#ef4444');
+
+  return (
+    <div className="flex flex-wrap justify-between gap-8">
+      {entries.map(([key, val]) => (
+        <div key={key} className="flex flex-col items-center text-center">
+          {/* ── круг ── */}
+          <div
+            className="relative size-72 rounded-full"
+            style={{
+              background: `conic-gradient(${ringColor(val)} ${val * 3.6}deg, #f5f5f5 ${
+                val * 3.6
+              }deg)`,
+            }}
+          >
+            {/* <div className="text-2xl font-semibold text-gray-800"></div> */}
+            {/* внутренний белый круг */}
+            <div className=" absolute inset-4 rounded-full bg-white flex items-center justify-center ">
+              <div className={` flex flex-col items-center`}>
+                <p className={`text-7xl font-extrabold ${color(val)}`}>
+                  {val}
+                  <span className="text-5xl">/100</span>
+                </p>
+
+                <span className="mt-2 max-w-[8rem] text-sm leading-snug">{ruLabel(key)}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* подпись */}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* русские подписи, можно заменить на eng */
+function ruLabel(k: keyof Scores) {
+  switch (k) {
+    case 'performance':
+      return 'Производительность';
+    case 'accessibility':
+      return 'Специальные\nвозможности';
+    case 'bestPractices':
+      return 'Рекомендации';
+    case 'seo':
+      return 'Поисковая\nоптимизация';
+    case 'pwa':
+      return 'PWA';
+    default:
+      return k;
+  }
 }
