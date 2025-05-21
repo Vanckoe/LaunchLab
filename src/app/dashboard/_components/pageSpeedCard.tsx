@@ -98,21 +98,6 @@ function Header({ url, strategy }: { url: string; strategy: string }) {
   );
 }
 
-// function CategoryScores(scores: PageSpeedApiResponse['scores']) {
-//   return (
-//     <div className="flex flex-wrap gap-4">
-//       {Object.entries(scores).map(
-//         ([k, v]) =>
-//           v !== null && (
-//             <span key={k} className={`px-2 py-1 rounded text-sm font-medium ${color(v)}`}>
-//               {k}: {v}
-//             </span>
-//           )
-//       )}
-//     </div>
-//   );
-// }
-
 function PerfBlock({
   scores, // ← вместо perf передаём сразу все баллы
   metrics,
@@ -132,10 +117,23 @@ function PerfBlock({
       </div>
 
       {/* ——— Core Web Vitals ——— */}
-      <ul className="text-xl space-y-1 w-full md:w-fit">
+      <ul className="text-base md:text-xl space-y-1 w-full md:w-fit">
         {vitalsOrder.map(k => (
           <li key={k} className="flex flex-row w-full md:w-fit justify-between gap-1">
-            <span className="uppercase font-semibold">{k}</span>
+            <span className="capitalize font-semibold">
+              {k} (
+              {
+                {
+                  fcp: 'Первое отображение контента',
+                  lcp: 'Отображение самого большого элемента',
+                  cls: 'Суммарное смещение макета',
+                  tbt: 'Общее время блокировки',
+                  tti: 'Время до интерактивности',
+                  si: 'Индекс скорости',
+                }[k]
+              }
+              )
+            </span>
             <span>{metrics[k].displayValue}</span>
           </li>
         ))}
@@ -148,7 +146,7 @@ function OpportunitiesList({ list }: { list: PageSpeedApiResponse['opportunities
   if (!list.length) return null;
   return (
     <div className="border-b md:border-none border-gray-200 pb-10 ">
-      <h3 className="font-semibold mb-2">Рекомендации по оптимизации</h3>
+      <h3 className="font-semibold mb-2 text-lg">Рекомендации по оптимизации</h3>
       <ul className="space-y-1 text-sm">
         {list.map(o => (
           <li key={o.id} className="flex justify-between gap-2">
@@ -165,7 +163,7 @@ function Diagnostics({ diag }: { diag: PageSpeedApiResponse['diagnostics'] }) {
   if (!Object.keys(diag).length) return null;
   return (
     <div className="border-b md:border-none border-gray-200 pb-10 ">
-      <h3 className="font-semibold mb-2">Диагностика</h3>
+      <h3 className="font-semibold mb-2 text-lg">Диагностика</h3>
       <ul className="text-sm space-y-1">
         {'numRequests' in diag && (
           <li>
@@ -191,11 +189,11 @@ function HeavyResources({ resources }: { resources: PageSpeedApiResponse['networ
   if (!resources.length) return null;
   return (
     <div>
-      <h3 className="font-semibold mb-2">Тяжёлые ресурсы (Top 10)</h3>
+      <h3 className="font-semibold mb-2 text-lg">Тяжёлые ресурсы (Top 10)</h3>
       <div className="overflow-x-auto">
         <table className="min-w-full text-sm">
           <thead>
-            <tr className="border-b dark:border-neutral-700">
+            <tr className="border-b dark:border-gray-200">
               <th className="text-left py-1 pr-4">URL</th>
               <th className="text-left py-1 pr-2">Тип</th>
               <th className="text-right py-1">KB</th>
@@ -203,8 +201,8 @@ function HeavyResources({ resources }: { resources: PageSpeedApiResponse['networ
           </thead>
           <tbody>
             {resources.map(r => (
-              <tr key={r.url} className="border-b last:border-none dark:border-neutral-700">
-                <td className="pr-4 py-1 whitespace-nowrap max-w-[240px] truncate">
+              <tr key={r.url} className="border-b last:border-none dark:border-gray-200">
+                <td className="pr-4 py-3 whitespace-nowrap max-w-[15rem] truncate">
                   <a href={r.url} target="_blank" rel="noopener noreferrer" className="underline">
                     {r.url}
                   </a>
