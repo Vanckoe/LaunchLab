@@ -34,12 +34,16 @@ export default function Home() {
   return (
     <div className="flex flex-col w-full mx-auto container mt-[4rem]">
       <div className="flex flex-row items-stretch gap-5">
-        <Input className="bg-white" iconLeft={<CloudSearch width="2rem" height="2rem" />} placeholder='Поиск проекта'/>
+        <Input
+          className="bg-white text-gray-900"
+          iconLeft={<CloudSearch width="2rem" height="2rem" />}
+          placeholder="Поиск проекта"
+        />
         <Link href={'/newProject'}>
           <Button>Добавить сайт...</Button>
         </Link>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-7 mt-10 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-7 mt-10 w-full text-gray-900">
         {projectsData.map((project, index) => (
           <ProjectCard
             key={index}

@@ -12,15 +12,17 @@ import Link from 'next/link';
 const NewProject = () => {
   return (
     <div className="flex flex-col w-full mx-auto container mt-[4rem]">
-      <div className="mx-auto flex flex-col gap-5 rounded-2xl md:max-w-2xl w-full bg-white  py-7 px-7">
+      <div className="mx-auto flex flex-col gap-5 rounded-2xl md:max-w-[50rem] w-full bg-white  py-7 px-7">
         <div className="flex flex-row items-center">
-          <Link href={'/'} className="pr-5 py-3">
+          <Link href={'/'} className="pr-5 py-3 text-gray-900">
             <ChevronLeft />
           </Link>
-          <p className="text-3xl font-semibold">Новый проект: </p>
+          <p className="text-3xl font-semibold text-gray-900">Новый проект: </p>
         </div>
         <div className="flex flex-col gap-2">
-          <p className="">Выберите, где какой проект хотите создать, и дайте ему название.</p>
+          <p className="text-gray-900">
+            Выберите, где какой проект хотите создать, и дайте ему название.
+          </p>
           {/* <Input
             placeholder="Сертификат защиты"
             className="pl-[3.3rem]! border bg-[#f3f4f680] border-gray-200 cursor-not-allowed"
@@ -28,18 +30,18 @@ const NewProject = () => {
           /> */}
           <Input
             placeholder="Ссылка на github"
-            className="pl-[3.3rem]! border border-gray-100"
+            className="pl-[3.3rem]! border border-gray-100 text-gray-900"
             iconLeft={<Github color="#0D87EF" width="1.3rem" height="1.3rem" />}
           />
           <Input
             placeholder="Выберите домен"
-            className="pl-[3.3rem]! border border-gray-100"
+            className="pl-[3.3rem]! border border-gray-100 text-gray-900"
             iconLeft={<Left color="#0D87EF" width="1.3rem" height="1.3rem" />}
           />
         </div>
         <Accordeon />
         <AccordeonEnv />
-        <Link href="/building">
+        <Link href="/dashboard">
           <Button variant={'primaryFull'}>Развертывание</Button>
         </Link>
       </div>

@@ -34,7 +34,7 @@ const SettingRow: React.FC<SettingRowProps> = ({ index, data, onChange, onRemove
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           onChange(index, 'key', e.target.value)
         }
-        className="flex-1 bg-white py-4! rounded-xl! border border-gray-100 placeholder:text-black placeholder:opacity-50 pl-5"
+        className="flex-1 bg-white py-4! rounded-xl! border border-gray-100 placeholder:text-black placeholder:opacity-50 pl-5 text-gray-600"
       />
 
       {/* Value */}
@@ -44,14 +44,14 @@ const SettingRow: React.FC<SettingRowProps> = ({ index, data, onChange, onRemove
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           onChange(index, 'value', e.target.value)
         }
-        className="flex-1 bg-white py-4! rounded-xl! border border-gray-100 placeholder:text-black placeholder:opacity-50 pl-5"
+        className="flex-1 bg-white py-4! rounded-xl! border border-gray-100 placeholder:text-black placeholder:opacity-50 pl-5 text-gray-600"
       />
 
       {/* Remove button */}
       <button
         type="button"
         onClick={() => onRemove(index)}
-        className=" px-5 py-5 bg-white shadow rounded-xl! border border-gray-100 flex items-center justify-center hover:bg-neutral-800/40 transition-colors"
+        className=" px-5 py-5 bg-white shadow rounded-xl! border border-gray-100 flex items-center justify-center hover:bg-neutral-800/40 transition-colors text-gray-600"
         aria-label="Remove row"
       >
         <Minus size={16} />
@@ -90,9 +90,9 @@ const AccordeonEnv: React.FC = () => {
       <button
         type="button"
         onClick={() => setOpen(prev => !prev)}
-        className="flex w-full items-center justify-between select-none"
+        className="flex w-full items-center justify-between select-none text-gray-600"
       >
-        <h2 className="text-lg font-semibold">Environment Variables</h2>
+        <h2 className="text-lg font-semibold text-gray-600">Environment Variables</h2>
         {open ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
       </button>
 
@@ -121,9 +121,9 @@ const AccordeonEnv: React.FC = () => {
             <button
               type="button"
               onClick={handleAdd}
-              className="rounded-xl! border border-gray-100 mt-5 bg-white w-fit px-5 py-4 inline-flex items-center gap-2 text-sm font-medium hover:underline"
+              className="rounded-xl! border border-gray-100 mt-5 bg-white w-fit px-5 py-4 inline-flex items-center gap-2 text-sm font-medium hover:underline text-gray-600"
             >
-              <Plus size={18} /> Add More
+              <Plus size={18} /> Добавить еще
             </button>
           </motion.div>
         )}

@@ -38,7 +38,7 @@ const ProjectCard = ({ domainName, link, github, lastUpdated, favicon }: Project
           <CloudPaper width="1.5rem" height="1.5rem" />
           <p className="">Last modified: {lastUpdated}</p>
         </div>
-        <Left color='black'/>
+        <Left color="black" />
       </Link>
     </div>
   );

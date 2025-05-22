@@ -1,26 +1,56 @@
+'use client';
+
 import React from 'react';
+import Link from 'next/link';
+import Button from '@/components/ui/button';
 import HeroDashboard from './_components/heroDashboard';
 import { GetProjectId } from '@/lib/utils/types';
 import PageSpeedCard from '@/app/dashboard/_components/pageSpeedCard';
-import AccordeonTerminal from '@/components/ui/accordeonTerminal';
-import DashboardButtons from './_components/dashboardButtons';
 
-import { mockLogs, jsonData } from '../../data/mockData';
+const jsonData: GetProjectId = {
+  projectId: '1',
+  github: 'https://github.com/Vanckoe/LaunchLab',
+  domainName: 'Youtube-academy.vercel.app',
+  frameworkPreset: 'Next.js',
+  link: 'https://youtube-academy.vercel.app',
+  lastUpdated: '2025-05-19T14:00:00Z',
+  securityLevel: 'Standart',
+  functionCPU: {
+    cpu: '0.6 vCPU',
+    memory: '1 GB',
+  },
+  buildStatus: {
+    state: 'Ready',
+    errors: [],
+  },
+};
 
 const Dashboard = () => {
   return (
     <div className="flex flex-col gap-5 w-full mx-auto container mt-[4rem]">
       <div className="flex flex-col gap-5 md:flex-row md:items-center justify-between">
         <p className="text-3xl font-medium">{jsonData.domainName}</p>
-        <DashboardButtons />
+        <div className="flex flex-row items-center gap-2">
+          <Button className="py-4 bg-white dark:bg-gray-800">Домен</Button>
+          <Link href={jsonData.github}>
+            <Button className="py-4">Настройки</Button>
+          </Link>
+        </div>
       </div>
+
       <div className="flex flex-col w-full h-[1px] bg-black opacity-30"></div>
+
       <div className="mx-auto flex flex-col gap-5 rounded-2xl w-full bg-white py-7 px-7">
         <div className="flex flex-col gap-5 md:flex-row md:items-center justify-between">
-          <p className="text-2xl font-medium">Развертывание проекта</p>
+          <p className="text-2xl font-medium text-gray-900">Развертывание проекта</p>
         </div>
         <HeroDashboard {...jsonData} />
-        <AccordeonTerminal logs={mockLogs} />
+        <div className="flex flex-row items-center gap-2">
+          <Button className="py-4">build logs</Button>
+          <Link href={jsonData.link}>
+            <Button className="py-4">Пересобрать проект</Button>
+          </Link>
+        </div>
         <PageSpeedCard url={jsonData.link} />
       </div>
     </div>
