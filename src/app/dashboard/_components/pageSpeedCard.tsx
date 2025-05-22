@@ -217,18 +217,46 @@ function HeavyResources({ resources }: { resources: PageSpeedApiResponse['networ
     </div>
   );
 }
+
 function Skeleton() {
   return (
-    <div className="bg-white border border-gray-100 rounded-lg p-6 shadow-md w-full animate-pulse">
-      <p className="mb-4">Загрузка анализа от Pagespeed...</p>
-      <div className="flex flex-row gap-4">
-        <div className="h-5 bg-gray-300  rounded w-1/6 mb-6" />
-        <div className="h-5 bg-gray-300  rounded w-1/4 mb-6" />
+    <div className="rounded-lg p-6 shadow-md w-full space-y-8 animate-pulse bg-white">
+      <div className="flex flex-col md:flex-row justify-between gap-4">
+        <p className="mb-4">Загрузка анализа от Pagespeed...</p>
+        <div className="flex gap-2">
+          <div className="h-8 w-16 bg-gray-200 rounded" />
+          <div className="h-8 w-16 bg-gray-200 rounded" />
+        </div>
       </div>
-      <div className="h-8 bg-gray-300  rounded w-1/3 mb-4" />
+      <div className="flex flex-col md:flex-row gap-10">
+        <div className="relative shrink-0">
+          <div className="size-40 md:size-48 rounded-full bg-gray-200" />
+          <div className="absolute inset-6 rounded-full bg-white" />
+        </div>
+        <ul className="flex flex-col gap-2 w-full">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <li key={i} className="h-4 bg-gray-200 rounded w-1/2" />
+          ))}
+        </ul>
+      </div>
+      <div className="grid md:grid-cols-2 gap-8">
+        <div className="space-y-2">
+          <div className="h-4 w-1/2 bg-gray-200 rounded" />
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="h-3 bg-gray-200 rounded" />
+          ))}
+        </div>
+        <div className="space-y-2">
+          <div className="h-4 w-1/3 bg-gray-200 rounded" />
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="h-3 bg-gray-200 rounded" />
+          ))}
+        </div>
+      </div>
       <div className="space-y-2">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <div key={i} className="h-3 bg-gray-300  rounded" />
+        <div className="h-4 w-2/3 bg-gray-200 rounded" />
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div key={i} className="h-3 bg-gray-200 rounded" />
         ))}
       </div>
     </div>

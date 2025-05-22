@@ -12,7 +12,7 @@ import Link from 'next/link';
 const NewProject = () => {
   return (
     <div className="flex flex-col w-full mx-auto container mt-[4rem]">
-      <div className="mx-auto flex flex-col gap-5 rounded-2xl md:max-w-[50rem] w-full bg-white  py-7 px-7">
+      <div className="mx-auto flex flex-col gap-5 rounded-2xl md:max-w-2xl w-full bg-white  py-7 px-7">
         <div className="flex flex-row items-center">
           <Link href={'/'} className="pr-5 py-3">
             <ChevronLeft />
@@ -39,7 +39,7 @@ const NewProject = () => {
         </div>
         <Accordeon />
         <AccordeonEnv />
-        <Link href="/dashboard">
+        <Link href="/building">
           <Button variant={'primaryFull'}>Развертывание</Button>
         </Link>
       </div>

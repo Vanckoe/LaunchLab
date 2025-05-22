@@ -1,32 +1,42 @@
 /* components/AccordeonTerminal.tsx */
 'use client';
 
-import { useState } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import TerminalLogs from '@/components/ui/TerminalLogs';
 
 interface AccordeonTerminalProps {
-  /** Строки-логи, приходящие от бэкенда */
   logs: string[];
+  speed?: number;
+  /** опционально: управлять извне  */
+  open?: boolean;
+  setOpen?: Dispatch<SetStateAction<boolean>>;
 }
 
-const AccordeonTerminal: React.FC<AccordeonTerminalProps> = ({ logs }) => {
-  const [open, setOpen] = useState(false);
+export default function AccordeonTerminal({
+  logs,
+  speed,
+  open: controlledOpen,
+  setOpen: controlledSetOpen,
+}: AccordeonTerminalProps) {
+  /* — если пропы не пришли, создаём своё состояние — */
+  const [internalOpen, internalSetOpen] = useState(false);
+  const open   = controlledOpen   ?? internalOpen;
+  const setOpen = controlledSetOpen ?? internalSetOpen;
 
   return (
     <section className="rounded-lg bg-[#f3f4f680] p-6 w-full">
-      {/* header */}
       <button
         type="button"
         onClick={() => setOpen(prev => !prev)}
         className="flex w-full items-center justify-between select-none"
+        aria-expanded={open}
       >
         <h2 className="text-lg font-semibold">Build / Runtime Logs</h2>
         {open ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
       </button>
 
-      {/* body */}
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
@@ -37,12 +47,10 @@ const AccordeonTerminal: React.FC<AccordeonTerminalProps> = ({ logs }) => {
             transition={{ duration: 0.25, ease: 'easeInOut' }}
             className="overflow-hidden mt-6"
           >
-            <TerminalLogs logs={logs} speed={1}/>
+            <TerminalLogs logs={logs} speed={speed} />
           </motion.div>
         )}
       </AnimatePresence>
     </section>
   );
-};
-
-export default AccordeonTerminal;
+}
