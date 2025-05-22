@@ -4,8 +4,8 @@ html {
   font-size: 3.333vw !important;
 }
 :root {
-  --background: #4A4A4A;
-  --foreground: #f5f7f9;
+  --background: #f5f7f9;
+  --foreground: #4A4A4A;
 }
 :root {
   --color-background: var(--background);
@@ -14,12 +14,6 @@ html {
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #f5f7f9;
-    --foreground: #4A4A4A;
-  }
-}
 
 
 body {
