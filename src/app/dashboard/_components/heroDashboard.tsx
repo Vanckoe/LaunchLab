@@ -64,7 +64,7 @@ const HeroDashboard: React.FC<HeroDashboardProps> = ({
               <span className="text-lg font-semibold"> Уровень защиты: </span> {securityLevel}
             </p>
             <p>
-              <span className="text-lg font-semibold">Function CPU:</span>  {functionCPU.cpu} /{' '}
+              <span className="text-lg font-semibold">Function CPU:</span> {functionCPU.cpu} /{' '}
               {functionCPU.memory}
             </p>
           </div>
