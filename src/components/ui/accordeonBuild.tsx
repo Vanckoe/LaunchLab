@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
+
 // ⬇ shadcn/ui primitives -----------------------------------------------------
 import { Switch } from './switch';
 import Input from '@/components/ui/input';
@@ -33,7 +34,9 @@ const SettingRow: React.FC<SettingRowProps> = ({ label, placeholder }) => {
   return (
     <div className="space-y-2">
       {/* Label with small info icon */}
-      <label className="text-sm font-medium flex items-center gap-1">{label}</label>
+      <label className="text-sm font-medium flex items-center gap-1">
+        {label}
+      </label>
 
       {/* Input + toggle */}
       <div className="relative">
@@ -69,10 +72,10 @@ const BuildOutputSettings: React.FC = () => {
       {/* header */}
       <button
         type="button"
-        onClick={() => setOpen(prev => !prev)}
-        className="flex w-full items-center justify-between select-none text-gray-600"
+        onClick={() => setOpen((prev) => !prev)}
+        className="flex w-full items-center justify-between select-none"
       >
-        <h2 className="text-lg font-semibold text-gray-600">Настройки Build и Command</h2>
+        <h2 className="text-lg font-semibold">Настройки Build и Command</h2>
         {open ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
       </button>
 
@@ -85,10 +88,16 @@ const BuildOutputSettings: React.FC = () => {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="overflow-hidden mt-6 flex flex-col gap-4 text-gray-900"
+            className="overflow-hidden mt-6 flex flex-col gap-4"
           >
-            <SettingRow label="Команда Build" placeholder="`next build` default" />
-            <SettingRow label="Output Directory" placeholder="Next.js default" />
+            <SettingRow
+              label="Команда Build"
+              placeholder="`next build` default"
+            />
+            <SettingRow
+              label="Output Directory"
+              placeholder="Next.js default"
+            />
             <SettingRow
               label="Install Command"
               placeholder="`yarn install`, `npm install`, или `bun install`"

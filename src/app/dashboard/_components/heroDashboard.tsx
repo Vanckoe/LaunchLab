@@ -32,23 +32,23 @@ const HeroDashboard: React.FC<HeroDashboardProps> = ({
         <div className="flex flex-col md:flex-row w-full md:justify-between">
           <div className="flex flex-col gap-4 md:gap-7 w-full">
             <div className="flex flex-col">
-              <p className="text-lg font-semibold text-gray-900">Развертывание: </p>
-              <Link href={link} className="text-[#0D87EF] text-base font-medium opacity-80 ">
+              <p className="text-lg font-semibold">Развертывание: </p>
+              <Link href={link} className="text-[#0D87EF] text-base font-medium opacity-80">
                 {link}
               </Link>
             </div>
             <div className="flex flex-col">
-              <p className="text-lg font-semibold text-gray-900">GitHub: </p>
+              <p className="text-lg font-semibold">GitHub: </p>
               <Link href={github} className="text-[#0D87EF] text-base font-medium opacity-80">
                 {github}
               </Link>
             </div>
             <div className="flex flex-row gap-10">
               <div className="flex flex-col">
-                <p className="text-lg font-semibold text-gray-900">Статус билда:</p>{' '}
-                <p className="text-gray-900">{buildStatus.state}</p>
+                <p className="text-lg font-semibold">Статус билда:</p>{' '}
+                <p className="">{buildStatus.state}</p>
                 {buildStatus.errors.length > 0 && (
-                  <ul className="text-red-500 ">
+                  <ul className="text-red-500">
                     {buildStatus.errors.map((error, index) => (
                       <li key={index}>Error: {error}</li>
                     ))}
@@ -56,20 +56,16 @@ const HeroDashboard: React.FC<HeroDashboardProps> = ({
                 )}
               </div>
               <div className="flex flex-col">
-                <p className="text-lg font-semibold text-gray-900">Последнее обновление: </p>
-                <p className="text-gray-900">{formattedDate}</p>
+                <p className="text-lg font-semibold">Последнее обновление: </p>
+                <p className="">{formattedDate}</p>
               </div>
             </div>
             <p>
-              <span className="text-lg font-semibold text-gray-900"> Уровень защиты: </span>{' '}
-              <p className="text-gray-900">{securityLevel}</p>
+              <span className="text-lg font-semibold"> Уровень защиты: </span> {securityLevel}
             </p>
             <p>
-              <span className="text-lg font-semibold text-gray-900">Function CPU:</span>{' '}
-              <p className="text-gray-900">
-                {' '}
-                {functionCPU.cpu} / {functionCPU.memory}
-              </p>
+              <span className="text-lg font-semibold">Function CPU:</span> {functionCPU.cpu} /{' '}
+              {functionCPU.memory}
             </p>
           </div>
           <div className="flex mt-10 md:mt-0 md:text-end flex-col">
