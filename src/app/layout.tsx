@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${inter.className} antialiased px-3 pb-24 md:px-0`}
+        className={`${inter.variable} ${inter.className} antialiased px-5 pb-24 md:px-0`}
       >
         <Header/>
         {children}

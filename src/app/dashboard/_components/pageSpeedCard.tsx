@@ -123,7 +123,7 @@ export default function PageSpeedCard({ url, initialStrategy = 'mobile' }: PageS
   if (!data) return null;
 
   return (
-    <div className="p-6 w-full bg-white space-y-6">
+    <div className=" w-full bg-white space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <Header url={url} strategy={strategy} />
         <StrategySwitch strategy={strategy} setStrategy={setStrategy} />

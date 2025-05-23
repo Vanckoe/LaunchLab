@@ -1,7 +1,7 @@
 'use client';
 
 import { MouseEvent } from 'react';
-import {  Settings } from 'lucide-react';
+import { Settings } from 'lucide-react';
 import Link from 'next/link';
 import Github from '@/assets/github';
 import Left from '@/assets/Left';
@@ -23,7 +23,7 @@ export default function SettingsModal({ open, onClose }: SettingsModalProps) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center
+      className="fixed inset-0 z-50 px-5 flex items-center justify-center
                  bg-black/30 backdrop-blur-sm"
       onClick={onClose}
       aria-modal
@@ -31,7 +31,7 @@ export default function SettingsModal({ open, onClose }: SettingsModalProps) {
     >
       <div
         className="w-full max-w-2xl bg-white rounded-2xl shadow-xl
-                   px-7 py-7 flex flex-col gap-6"
+                   px-7 py-7 flex flex-col gap-6 max-h-[80vh] overflow-y-auto"
         onClick={stop}
       >
         {/* header */}

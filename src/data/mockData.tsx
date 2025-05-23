@@ -54,8 +54,8 @@ export const mockLogs = [
 
 export const jsonData: GetProjectId = {
   projectId: '1',
-  github: 'https://github.com/Vanckoe/LaunchLab',
-  domainName: 'Youtube-academy.vercel.app',
+  github: 'https://github.com/Vanckoe/youtube-academy',
+  domainName: 'youacademy.com.ua',
   frameworkPreset: 'Next.js',
   link: 'https://youtube-academy.vercel.app/',
   lastUpdated: '2025-05-19T14:00:00Z',
