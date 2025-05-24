@@ -14,7 +14,7 @@ const NewProject = () => {
     <div className="flex flex-col w-full mx-auto container mt-[4rem]">
       <div className="mx-auto flex flex-col gap-5 rounded-2xl md:max-w-2xl w-full bg-white  py-7 px-7">
         <div className="flex flex-row items-center">
-          <Link href={'/'} className="pr-5 py-3">
+          <Link href={'/projects'} className="pr-5 py-3">
             <ChevronLeft />
           </Link>
           <p className="text-3xl font-semibold">Новый проект: </p>

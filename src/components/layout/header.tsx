@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <div className="flex flex-row items-center justify-between w-full mx-auto mt-4 container">
       <div className="flex flex-row items-center gap-4">
-        <Link href={'/'}>
+        <Link href={'/projects'}>
           <Image src={'/logo.png'} alt="logo" width={192} height={192} className="size-[3.5rem]" />
         </Link>
         <p className="text-xl font-medium leading-[100%]">
